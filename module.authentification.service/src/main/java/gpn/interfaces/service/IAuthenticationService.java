@@ -9,5 +9,5 @@ import javax.naming.NamingException;
 public interface IAuthenticationService {
 
     /**Получить аутентификационный токен для пользователя*/
-    String getAuthToken(String userName) throws UserNotFoundException, NamingException, ApplicationException;
+    String getAuthToken(String firstName, String lastName, String phone) throws UserNotFoundException, NamingException, ApplicationException;
 }

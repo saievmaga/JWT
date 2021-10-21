@@ -19,7 +19,7 @@ public class JwtController {
     @GetMapping("/testjwt")
     public ResponseEntity<?> getFakeResult(@AuthenticationPrincipal SessionUser sUser) {
         try {
-            return ResponseEntity.ok("succes");
+            return ResponseEntity.ok("success");
         } catch (Exception ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
