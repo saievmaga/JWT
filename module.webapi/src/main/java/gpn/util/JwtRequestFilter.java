@@ -1,6 +1,7 @@
 package gpn.util;
 
 import gpn.contract.Claim;
+import io.jsonwebtoken.Claims;
 import gpn.service.JwtUserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String jwtToken = null;
         Integer id = null;
         List<Claim> claims = new ArrayList<>();
+        Claims allClaims = null;
 // JWT Token is in the form "Bearer token". Remove Bearer word and get
 // only the Token
         if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
@@ -50,6 +52,14 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 username = jwtTokenUtil.getUsernameFromToken(jwtToken);
                 id = (Integer) jwtTokenUtil.getAllClaimsFromToken(jwtToken).remove("id");
                 claims = (List<Claim>) jwtTokenUtil.getAllClaimsFromToken(jwtToken).get(keyRole);
+                allClaims = jwtTokenUtil.getAllClaimsFromToken(jwtToken);
+                String lastName = (String) allClaims.get("lastName");
+                String phoneNumber = (String) allClaims.get("phoneNumber");
+                System.out.println("{");
+                System.out.println("\t\"userName\" : \"" + username + "\"," );
+                System.out.println("\t\"lastName\" : \"" + lastName + "\"," );
+                System.out.println("\t\"phoneNumber\" : \"" + phoneNumber + "\"" );
+                System.out.println("}");
             } catch (IllegalArgumentException e) {
                 System.out.println("Unable to get JWT Token");
             } catch (ExpiredJwtException e) {
